@@ -60,10 +60,16 @@ class SurveyDetail(View):
             next_url = form.next_step_url()
             response = None
             if survey.display_by_question:
+                print "Goes", form.has_next_step()
                 if not form.has_next_step():
+                    response = form.save()
+                    '''
                     save_form = ResponseForm(request.session[session_key],
                                              survey=survey, user=request.user)
                     response = save_form.save()
+                    '''
+                else:
+                    response = form.save()
             else:
                 response = form.save()
 
