@@ -60,7 +60,6 @@ class SurveyDetail(View):
             next_url = form.next_step_url()
             response = None
             if survey.display_by_question:
-                print "Goes", form.has_next_step()
                 if not form.has_next_step():
                     response = form.save()
                     '''
