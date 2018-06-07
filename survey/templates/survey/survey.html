@@ -15,12 +15,13 @@
 	    {% csrf_token %}
 	    <div><h3>Video content</h3>
 	    {% if video.type == 0 %}
-	    
 	    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.vid }}/?mute=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-	    <input type="hidden" id="videoID" name="videoID" value="{{ video.id }}">
+	    {% elif video.type == 1 %}
+	    <iframe src="https://drive.google.com/file/d/{{ video.vid }}/preview" width="640" height="480"></iframe>
 	    {% else %}
 	    Please follow the URL <a href="{{ video.url }}">here</a> to watch the video content.
 	    {% endif %}
+	    <input type="hidden" id="videoID" name="videoID" value="{{ video.id }}">
 	    </div>
         {% for category in categories %}
             <h3> {{category}} </h3>
