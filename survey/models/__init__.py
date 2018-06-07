@@ -18,6 +18,7 @@ from .question import Question
 from .response import Response
 from .survey import Survey
 from .videos import Video
+from .video_category import VideoCategory
 
 
-__all__ = ["Category", "Answer", "Category", "Response", "Survey", "Question", "Video"]
+__all__ = ["Category", "Answer", "Category", "Response", "Survey", "Question", "Video", "VideoCategory"]

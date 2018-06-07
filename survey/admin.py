@@ -7,7 +7,7 @@ from __future__ import (
 from django.contrib import admin
 from future import standard_library
 
-from survey.models import Answer, Category, Question, Response, Survey, Video
+from survey.models import Answer, Category, Question, Response, Survey, Video, VideoCategory
 
 from .actions import make_published
 
@@ -60,3 +60,4 @@ class VideoAdmin(admin.ModelAdmin):
 admin.site.register(Survey, SurveyAdmin)
 admin.site.register(Response, ResponseAdmin)
 admin.site.register(Video, VideoAdmin)
+admin.site.register(VideoCategory)
