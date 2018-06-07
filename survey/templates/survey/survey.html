@@ -13,6 +13,15 @@
 	<div class="survey-description"> {{survey.description|safe}} </div>
 	<div><form action="{% url 'survey-detail' id=survey.id %}" method="post">
 	    {% csrf_token %}
+	    <div><h3>Video content</h3>
+	    {% if video.type == 0 %}
+	    
+	    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.vid }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+	    <input type="hidden" id="videoID" name="videoID" value="{{ video.id }}">
+	    {% else %}
+	    Please follow the URL here: {{ video.url }} to watch the video content.
+	    {% endif %}
+	    </div>
         {% for category in categories %}
             <h3> {{category}} </h3>
             <p> {{category.description}} </p>

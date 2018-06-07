@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from future import standard_library
 
 from .survey import Survey
+from .videos import Video
 
 try:
     from django.conf import settings
@@ -38,6 +39,8 @@ class Response(models.Model):
                                related_name="responses")
     user = models.ForeignKey(user_model, verbose_name=_("User"), null=True,
                              blank=True)
+    video = models.ForeignKey(Video, verbose_name=_("Video"),
+                              related_name="videos", default=0)
     interview_uuid = models.CharField(_(u"Interview unique identifier"),
                                       max_length=36)
 

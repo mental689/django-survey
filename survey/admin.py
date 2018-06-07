@@ -7,7 +7,7 @@ from __future__ import (
 from django.contrib import admin
 from future import standard_library
 
-from survey.models import Answer, Category, Question, Response, Survey
+from survey.models import Answer, Category, Question, Response, Survey, Video
 
 from .actions import make_published
 
@@ -48,9 +48,15 @@ class ResponseAdmin(admin.ModelAdmin):
     readonly_fields = (
         'survey', 'created', 'updated', 'interview_uuid', 'user'
     )
+    
+    
+class VideoAdmin(admin.ModelAdmin):
+    model = Video
+    extra = 0
 
 
 # admin.site.register(Question, QuestionInline)
 # admin.site.register(Category, CategoryInline)
 admin.site.register(Survey, SurveyAdmin)
 admin.site.register(Response, ResponseAdmin)
+admin.site.register(Video, VideoAdmin)

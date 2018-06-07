@@ -9,6 +9,7 @@ from builtins import object
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from future import standard_library
+#from .videos import Video
 
 standard_library.install_aliases()
 
@@ -21,6 +22,9 @@ class Survey(models.Model):
     need_logged_user = models.BooleanField(_("Only authenticated users can see it and answer it"),)
     display_by_question = models.BooleanField(_("Display by question"),)
     template = models.CharField(_("Template"), max_length=255, null=True, blank=True)
+    randomize_questions = models.BooleanField(_("Whether to randomize question to prevent bias"), default=True)
+#    video = models.ForeignKey(Video, verbose_name=_("Video"),
+#                              related_name="videos", default=0)
 
     class Meta(object):
         verbose_name = _('survey')

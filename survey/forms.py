@@ -14,7 +14,7 @@ from django.forms import models
 from django.utils.text import slugify
 from future import standard_library
 
-from survey.models import Answer, Question, Response
+from survey.models import Answer, Question, Response, Video
 from survey.signals import survey_completed
 from survey.widgets import ImageSelectWidget
 
@@ -43,6 +43,7 @@ class ResponseForm(models.ModelForm):
         """ Expects a survey object to be passed in initially """
         self.survey = kwargs.pop('survey')
         self.user = kwargs.pop('user')
+        self.video = kwargs.pop('video')
         try:
             self.step = int(kwargs.pop('step'))
         except KeyError:
@@ -209,11 +210,12 @@ class ResponseForm(models.ModelForm):
     def save(self, commit=True):
         """ Save the response object """
         # Recover an existing response from the database if any
-        #  There is only one response by logged user.
+        #  There is only one response by logged user.
         response = self._get_preexisting_response()
         if response is None:
             response = super(ResponseForm, self).save(commit=False)
         response.survey = self.survey
+        response.video = self.video
         response.interview_uuid = self.uuid
         if self.user.is_authenticated():
             response.user = self.user
