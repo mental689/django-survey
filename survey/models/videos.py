@@ -22,7 +22,7 @@ class VideosManager(models.Manager):
     def random(self, catID):
         count = self.filter(cat__id=catID).aggregate(count=Count('id'))['count']
         random_index = randint(0, count - 1)
-        return self.all()[random_index]
+        return self.filter(cat__id=catID)[random_index]
 
 class Video(models.Model):
     objects = VideosManager()
