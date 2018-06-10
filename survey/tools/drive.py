@@ -10,17 +10,19 @@ import csv
 import logging
 import django
 django.setup()
-from survey.models import Video
+from survey.models import Video, VideoCategory
 from django.db import *
 from tqdm import tqdm
 
 
 def read_csv(csvfile):
     r = csv.reader(csvfile, delimiter=",")
-    for row in tqdm(enumerate(r)):
+    for row in tqdm((r)):
         try:
-            v = Video(vid=row[0], url=row[1], type=row[2])
-            v.save()
+            catId = row[-1]
+            cat = VideoCategory.objects.filter(id=catId)[0]
+            v = Video(vid=row[1], url=row[0], start=int(row[2]), end=int(row[3]), type=row[4], cat=cat)
+            v.save()        
         except Exception as e:
             logging.debug(e)
         

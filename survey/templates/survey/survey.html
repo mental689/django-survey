@@ -15,7 +15,7 @@
 	    {% csrf_token %}
 	    <div><h3>Video content</h3>
 	    {% if video.type == 0 %}
-	    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.vid }}/?mute=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+	    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.vid }}/?mute=1&start={{ video.start }}&end={{ video.end }}&showinfo=0&controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 	    {% elif video.type == 1 %}
 	    <iframe src="https://drive.google.com/file/d/{{ video.vid }}/preview" width="640" height="480"></iframe>
 	    {% else %}

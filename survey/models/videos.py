@@ -30,5 +30,7 @@ class Video(models.Model):
     vid =  models.CharField(_("Video ID"), blank=True, null=False, max_length=50)
     type = models.IntegerField(default=0) # 0: youtube, 1: others
     cat = models.ForeignKey(VideoCategory, default=1)
+    start = models.IntegerField(_("Start time"), default=0)
+    end = models.IntegerField(_("End time"), default=0)
     created = models.DateTimeField(_("Creation date"), auto_now_add=True)
     updated = models.DateTimeField(_("Update date"), auto_now=True)
