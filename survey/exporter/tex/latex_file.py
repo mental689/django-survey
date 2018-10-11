@@ -1,18 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
 import logging
 from builtins import open
 from datetime import datetime
 
-from future import standard_library
-
 LOGGER = logging.getLogger(__name__)
-
-standard_library.install_aliases()
 
 
 class LatexFile(object):
@@ -44,14 +36,14 @@ class LatexFile(object):
         """ Return the header of a .tex file.
 
         :rtype: String """
-        header = u"\\documentclass"
+        header = "\\documentclass"
         if self.document_option:
-            header += u"[{}]".format(self.document_option)
-        header += u"{%s}\n" % self.document_class
-        header += u"\date{%s}\n" % self.date
-        header += u"%s\n" % self._header
-        header += u"\\begin{document}\n"
-        header += u"%s\n" % self.intro
+            header += "[{}]".format(self.document_option)
+        header += "{%s}\n" % self.document_class
+        header += "\date{%s}\n" % self.date
+        header += "%s\n" % self._header
+        header += "\\begin{document}\n"
+        header += "%s\n" % self.intro
         return header
 
     @property
@@ -77,4 +69,4 @@ class LatexFile(object):
         """ Return the full text of the LatexFile.
 
         :rtype: String"""
-        return u"{}{}{}".format(self.header, self.text, self.footer)
+        return "{}{}{}".format(self.header, self.text, self.footer)

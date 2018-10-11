@@ -1,21 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
 import logging
 
 from django.utils.translation import ugettext_lazy as _
-from future import standard_library
 from pandas.core.frame import DataFrame
 
 from survey.exporter.tex.question2tex import Question2Tex
 from survey.exporter.tex.sankey import sankey
 from survey.models.question import Question
-
-standard_library.install_aliases()
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -68,8 +60,8 @@ class Question2TexSankey(Question2Tex):
         )
         q1 = []
         q2 = []
-        for answer_to_q1, cardinality_to_q2 in self.cardinality.items():
-            for answer_to_q2, number_of_time in cardinality_to_q2.items():
+        for answer_to_q1, cardinality_to_q2 in list(self.cardinality.items()):
+            for answer_to_q2, number_of_time in list(cardinality_to_q2.items()):
                 for _ in range(number_of_time):
                     q1.append(answer_to_q1)
                     q2.append(answer_to_q2)

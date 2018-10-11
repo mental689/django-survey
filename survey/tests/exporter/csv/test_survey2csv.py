@@ -1,16 +1,8 @@
 # -*- coding: utf-8 -*-
-
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
-from future import standard_library
 from mock.mock import patch
 
 from survey.exporter.csv.survey2csv import Survey2Csv
 from survey.tests.management.test_management import TestManagement
-
-standard_library.install_aliases()
 
 
 @staticmethod

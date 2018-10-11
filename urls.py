@@ -19,5 +19,5 @@ urlpatterns = [
     url('accounts/', include('django.contrib.auth.urls')),
     url(r'^rosetta/', include('rosetta.urls')),
     url(r'^survey/', include('survey.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
 ]

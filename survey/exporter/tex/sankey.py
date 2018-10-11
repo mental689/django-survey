@@ -75,7 +75,7 @@ def sankey(left, right, leftWeight=None, rightWeight=None, colorDict=None,
 
     # Create Dataframe
     df = pd.DataFrame({'left': left, 'right': right, 'leftWeight': leftWeight,
-                       'rightWeight': rightWeight}, index=range(len(left)))
+                       'rightWeight': rightWeight}, index=list(range(len(left))))
 
     # Identify all labels that appear 'left' or 'right'
     allLabels = pd.Series(np.r_[df.left.unique(), df.right.unique()]).unique()

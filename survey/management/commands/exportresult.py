@@ -1,20 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
 import logging
 
 from django.utils import translation
-from future import standard_library
 
 from survey.exporter.csv import Survey2Csv
 from survey.exporter.tex.configuration import Configuration
 from survey.exporter.tex.survey2tex import Survey2Tex
 from survey.management.survey_command import SurveyCommand
-
-standard_library.install_aliases()
 
 LOGGER = logging.getLogger(__name__)
 
@@ -25,7 +18,7 @@ class Command(SurveyCommand):
         See the "help" var.
     """
 
-    help = u"""This command permit to export all survey in the database as csv
+    help = """This command permit to export all survey in the database as csv
                and tex."""
 
     def add_arguments(self, parser):

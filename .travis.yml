@@ -1,10 +1,8 @@
 language: python
 python:
-  - "2.7"
   - "3.6"
 
 before_install:
-  - sudo apt-get install -y python-tk
   - sudo apt-get install -y python3-tk
   - sudo apt-get install -y texlive-latex-base pgf texlive-pictures texlive-latex-extra
   - sudo apt-get install -y libblas-dev liblapack-dev libatlas-base-dev gfortran

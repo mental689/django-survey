@@ -1,16 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
 from django.core.management import call_command
-from future import standard_library
 
 from survey.management.survey_command import SurveyCommand
 from survey.tests.base_test import BaseTest
-
-standard_library.install_aliases()
 
 
 class TestSurveyCommand(BaseTest):

@@ -1,25 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
 import logging
 import uuid
-from builtins import int, object, super
 
 from django import forms
-from django.core.urlresolvers import reverse
 from django.forms import models
+from django.urls import reverse
 from django.utils.text import slugify
-from future import standard_library
 
 from survey.models import Answer, Question, Response, Video
 from survey.signals import survey_completed
 from survey.widgets import ImageSelectWidget
-
-standard_library.install_aliases()
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -66,7 +57,7 @@ class ResponseForm(models.ModelForm):
 
         The user must be logged.
         :rtype: Response or None"""
-        if not self.user.is_authenticated():
+        if not self.user.is_authenticated:
             return None
         try:
             return Response.objects.get(user=self.user, survey=self.survey)
@@ -217,7 +208,7 @@ class ResponseForm(models.ModelForm):
         response.survey = self.survey
         response.video = self.video
         response.interview_uuid = self.uuid
-        if self.user.is_authenticated():
+        if self.user.is_authenticated:
             response.user = self.user
         response.save()
         # response "raw" data as dict (for signal)
@@ -228,7 +219,7 @@ class ResponseForm(models.ModelForm):
         }
         # create an answer object for each question and associate it with this
         # response.
-        for field_name, field_value in self.cleaned_data.items():
+        for field_name, field_value in list(self.cleaned_data.items()):
             if field_name.startswith("question_"):
                 # warning: this way of extracting the id is very fragile and
                 # entirely dependent on the way the question_id is encoded in
