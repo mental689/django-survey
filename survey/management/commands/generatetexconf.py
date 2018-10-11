@@ -1,17 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
-from builtins import open, str
-
-from future import standard_library
-
 from survey.exporter.tex import ConfigurationBuilder
 from survey.management.survey_command import SurveyCommand
-
-standard_library.install_aliases()
 
 
 class Command(SurveyCommand):
@@ -20,7 +10,7 @@ class Command(SurveyCommand):
         See the "help" var.
     """
 
-    help = u"""This command permit to generate the latex configuration in order
+    help = """This command permit to generate the latex configuration in order
     to manage the survey report generation. """
 
     def add_arguments(self, parser):

@@ -1,23 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
 import logging
 import os
-from builtins import object, open
 from datetime import datetime
 
 import pytz
 from django.conf import settings
-from django.utils import timezone
 from django.utils.text import slugify
-from future import standard_library
 
 from survey.models import Survey
-
-standard_library.install_aliases()
 
 LOGGER = logging.getLogger(__name__)
 
@@ -45,7 +36,7 @@ class Survey2X(object):
         """ Return the csv file name for a Survey.
 
         :param Survey survey: The survey we're treating. """
-        file_name = u"{}.{}".format(slugify(self.survey.name), self._get_X())
+        file_name = "{}.{}".format(slugify(self.survey.name), self._get_X())
         path = os.path.join(self._get_X_dir(), file_name)
         return path
 

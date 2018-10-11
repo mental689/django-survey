@@ -5,33 +5,26 @@
     field sizes depending on the actual question this answer corresponds to any
     "required" attribute will be enforced by the form.
 """
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
 
-from builtins import super
 import logging
 
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from future import standard_library
 
 from .question import Question
 from .response import Response
-
-
-standard_library.install_aliases()
-
 
 LOGGER = logging.getLogger(__name__)
 
 
 class Answer(models.Model):
 
-    question = models.ForeignKey(Question, verbose_name=_("Question"),
+    question = models.ForeignKey(Question, on_delete=models.CASCADE,
+                                 verbose_name=_("Question"),
                                  related_name="answers")
-    response = models.ForeignKey(Response, verbose_name=_("Response"),
+    response = models.ForeignKey(Response, on_delete=models.CASCADE,
+                                 verbose_name=_("Response"),
                                  related_name="answers")
     created = models.DateTimeField(_("Creation date"), auto_now_add=True)
     updated = models.DateTimeField(_("Update date"), auto_now=True)
@@ -84,6 +77,6 @@ class Answer(models.Model):
                     raise ValidationError(msg)
 
     def __str__(self):
-        return u"{} to '{}' : '{}'".format(
+        return "{} to '{}' : '{}'".format(
             self.__class__.__name__, self.question, self.body
         )

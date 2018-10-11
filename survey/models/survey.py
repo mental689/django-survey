@@ -1,18 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
-from builtins import object
-
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from future import standard_library
-#from .videos import Video
 from .video_category import VideoCategory
-
-standard_library.install_aliases()
 
 
 class Survey(models.Model):
@@ -45,6 +36,5 @@ class Survey(models.Model):
                 min_ = response.updated
         return min_
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('survey-detail', [self.pk])
+        return reverse('survey-detail', kwargs={"id": self.pk})

@@ -1,19 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
 import logging
 
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from future import standard_library
 
 from survey.exporter.tex.question2tex import Question2Tex
-
-standard_library.install_aliases()
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -66,7 +58,7 @@ class Question2TexChart(Question2Tex):
             try:
                 colors.append(self.color[answer])
             except (KeyError, ValueError):
-                msg = u"Color for '%s' not provided. You could " % answer
+                msg = "Color for '%s' not provided. You could " % answer
                 msg += "add '%s: \"red!50\"', in your color config." % answer
                 LOGGER.warning(msg)
                 colors.append(settings.SURVEY_DEFAULT_PIE_COLOR)
@@ -74,19 +66,19 @@ class Question2TexChart(Question2Tex):
 
     def get_results(self):
         """ Return a formated string for a tikz pgf-pie chart. """
-        pie = u""
-        for answer, cardinality in self.cardinality.items():
+        pie = ""
+        for answer, cardinality in list(self.cardinality.items()):
             if not answer:
                 ans = _("Left blank")
             ans = Question2Tex.get_clean_answer(answer)
             pie += "{}/{},".format(cardinality, ans)
         if not pie:
-            return u""
+            return ""
         final_answers = []
         for answer in pie.split(","):
             if answer:
                 final_answers.append(answer)
-        return u"            {}".format(u",\n            ".join(final_answers))
+        return "            {}".format(",\n            ".join(final_answers))
 
     def get_pie_options(self):
         """ Return the options of the pie for this: \pie[options]{data}"""

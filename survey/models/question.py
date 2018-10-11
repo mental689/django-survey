@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
-from builtins import object, super
 import logging
 
 from django.conf import settings
@@ -12,7 +7,6 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from future import standard_library
 
 from .category import Category
 from .survey import Survey
@@ -24,9 +18,8 @@ except ImportError:  # pragma: no cover
 
 LOGGER = logging.getLogger(__name__)
 
-standard_library.install_aliases()
 
-CHOICES_HELP_TEXT = _(u"""The choices field is only used if the question type
+CHOICES_HELP_TEXT = _("""The choices field is only used if the question type
 if the question type is 'radio', 'select', or
 'select multiple' provide a comma-separated list of
 options for this question .""")
@@ -63,22 +56,24 @@ class Question(models.Model):
     INTEGER = 'integer'
 
     QUESTION_TYPES = (
-        (TEXT, _(u'text (multiple line)')),
-        (SHORT_TEXT, _(u'short text (one line)')),
-        (RADIO, _(u'radio')),
-        (SELECT, _(u'select')),
-        (SELECT_MULTIPLE, _(u'Select Multiple')),
-        (SELECT_IMAGE, _(u'Select Image')),
-        (INTEGER, _(u'integer')),
+        (TEXT, _('text (multiple line)')),
+        (SHORT_TEXT, _('short text (one line)')),
+        (RADIO, _('radio')),
+        (SELECT, _('select')),
+        (SELECT_MULTIPLE, _('Select Multiple')),
+        (SELECT_IMAGE, _('Select Image')),
+        (INTEGER, _('integer')),
     )
 
     text = models.TextField(_("Text"))
     order = models.IntegerField(_("Order"),)
     required = models.BooleanField(_("Required"),)
-    category = models.ForeignKey(Category, verbose_name=_("Category"),
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL,
+                                 verbose_name=_("Category"),
                                  blank=True, null=True,
                                  related_name="questions")
-    survey = models.ForeignKey(Survey, verbose_name=_("Survey"),
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE,
+                               verbose_name=_("Survey"),
                                related_name="questions")
     type = models.CharField(_("Type"), max_length=200, choices=QUESTION_TYPES,
                             default=TEXT)
@@ -266,18 +261,18 @@ class Question(models.Model):
         sorted_cardinality = None
         if user_defined:
             sorted_cardinality = sorted(
-                cardinality.items(), key=lambda x: sort_answer.get(x[0], 0)
+                list(cardinality.items()), key=lambda x: sort_answer.get(x[0], 0)
             )
         elif sort_answer == SortAnswer.ALPHANUMERIC:
             sorted_cardinality = sorted(cardinality.items())
         elif sort_answer == SortAnswer.CARDINAL:
             if other_question is None:
-                sorted_cardinality = sorted(cardinality.items(),
+                sorted_cardinality = sorted(list(cardinality.items()),
                                             key=lambda x: (-x[1], x[0]))
             else:
                 # There is a dict instead of an int
                 sorted_cardinality = sorted(
-                    cardinality.items(),
+                    list(cardinality.items()),
                     key=lambda x: (-sum(x[1].values()), x[0])
                 )
         return OrderedDict(sorted_cardinality)
@@ -312,7 +307,7 @@ class Question(models.Model):
         """ Return the value we should use for cardinality. """
         value = Question.standardize(value, group_by_letter_case,
                                      group_by_slugify)
-        for key, values in group_together.items():
+        for key, values in list(group_together.items()):
             grouped_values = Question.standardize_list(
                 values, group_by_letter_case, group_by_slugify
             )
@@ -358,8 +353,8 @@ class Question(models.Model):
         return choices_tuple
 
     def __str__(self):
-        msg = u"Question '{}' ".format(self.text)
+        msg = "Question '{}' ".format(self.text)
         if self.required:
-            msg += u"(*) "
-        msg += u"{}".format(self.get_clean_choices())
+            msg += "(*) "
+        msg += "{}".format(self.get_clean_choices())
         return msg

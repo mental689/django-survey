@@ -1,19 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
-from builtins import str
 from sys import version_info
 
 from django.core.management.base import BaseCommand
-from future import standard_library
 
 from survey.models import Survey
 from survey.models.question import Question
-
-standard_library.install_aliases()
 
 
 class SurveyCommand(BaseCommand):

@@ -1,1 +1,3 @@
-prune survey/tests*
+recursive-include survey *
+include readme.md
+include requirements*txt

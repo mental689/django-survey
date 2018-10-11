@@ -1,18 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
 import os
 
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.client import Client
-from future import standard_library
-
-standard_library.install_aliases()
 
 
 class BaseTest(TestCase):

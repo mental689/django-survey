@@ -13,7 +13,7 @@ colorama.init()
 print("\033[33m"
       "You're using a dev settings file. It includes django rosetta (in order "
       " for dev to update translations) that is only useful for dev. "
-      "If you're a developper you need to 'pip install requirement_dev.txt', "
+      "If you're a developper you need to 'pip install -r requirement_dev.txt', "
       "If you want to use the app without doing your own settings you should"
       " remove django-rosetta from the installed apps in the settings."
       "\033[39m")
@@ -94,13 +94,12 @@ TEMPLATES = [
     },
 ]
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -128,6 +127,7 @@ LOCALE_PATHS = (
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
     ('en', 'english'),
+    ('es', 'spanish'),
     ('fr', 'french'),
     ('ja', 'Japanese'),
 )

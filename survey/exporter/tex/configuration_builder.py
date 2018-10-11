@@ -1,16 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
-from future import standard_library
-
 from survey.models import Survey
 
 from .configuration import Configuration
-
-standard_library.install_aliases()
 
 
 class ConfigurationBuilder(Configuration):
@@ -25,11 +17,16 @@ class ConfigurationBuilder(Configuration):
     """
 
     def __init__(self, survey=None):
+        """ Initialize a configuration file.
+
+        :param Survey survey: If survey is defined we generate configuration
+        only for this survey."""
         super(ConfigurationBuilder, self).__init__(self.DEFAULT_PATH)
         self._init_default()
         if survey:
             for other_survey in Survey.objects.all():
-                if survey.name != other_survey.name:
+                unwanted_survey = survey.name != other_survey.name
+                if unwanted_survey:
                     del self._conf[other_survey.name]
 
     def _init_default(self):

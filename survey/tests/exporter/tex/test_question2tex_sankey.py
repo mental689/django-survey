@@ -1,17 +1,8 @@
 # -*- coding: utf-8 -*-
 
-
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
-from future import standard_library
-
 from survey.exporter.tex.question2tex_sankey import Question2TexSankey
 # from survey.models.question import Question
 from survey.tests.management.test_management import TestManagement
-
-standard_library.install_aliases()
 
 
 class TestQuestion2TexSankey(TestManagement):

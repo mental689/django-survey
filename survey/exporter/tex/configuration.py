@@ -1,21 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
 import copy
 import logging
 import os
 
 import yaml
 from django.conf import settings
-from future import standard_library
 
 from survey.models.survey import Survey
-
-standard_library.install_aliases()
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -47,14 +39,15 @@ class Configuration(object):
     @property
     def valid_survey_names(self):
         """ Return a list of the valid name for a survey. """
-        vsn = [survey.name for survey in Survey.objects.all()]
-        vsn.append("generic")
-        return vsn
+        valid_survey_names = [survey.name for survey in Survey.objects.all()]
+        valid_survey_names.append("generic")
+        return valid_survey_names
 
     def check_survey_exists(self, survey_name):
         """ Check if the survey name exists.
 
         :param String survey_name: The name of a survey. """
+        LOGGER.info("Checking that '%s' is an existing survey.", survey_name)
         if type(survey_name) == Survey:
             msg = "Expecting a string for 'survey_name' and got a Survey "
             msg += " ('{}').".format(survey_name)
@@ -78,7 +71,7 @@ class Configuration(object):
         :rtype: Dict """
         with open(filepath, 'r') as f:
             configuration = yaml.load(f)
-        for survey_name in configuration.keys():
+        for survey_name in list(configuration.keys()):
             self.check_survey_exists(survey_name)
             if not configuration[survey_name]:
                 raise ValueError("Nothing in %s's configuration" % survey_name)
@@ -100,7 +93,7 @@ class Configuration(object):
         # print("d", d, "u", u)
         if d is None:
             return u
-        for k, v in u.items():
+        for k, v in list(u.items()):
             # print("k", k, "v", v)
             if isinstance(v, collections.Mapping):
                 r = self.recursive_update(d.get(k, {}), v)
@@ -119,7 +112,7 @@ class Configuration(object):
         """ Update a dictionary and handle the multiple charts values. """
         self.recursive_update(d, u)
         multiple_charts = self.get_multiple_charts(d)
-        for chart, chart_conf in multiple_charts.items():
+        for chart, chart_conf in list(multiple_charts.items()):
             chart_conf = copy.deepcopy(d["chart"])
             umc = self.get_multiple_charts(u).get(chart, {})
             self.recursive_update(chart_conf, umc)
@@ -179,6 +172,6 @@ class Configuration(object):
             if question_text:
                 msg += "and question '{}', ".format(question_text)
             msg += "key '{}' does not exists. ".format(key)
-            msg += "Possible values : {}".format(conf.keys())
+            msg += "Possible values : {}".format(list(conf.keys()))
             LOGGER.error(msg)
             raise ValueError(msg)

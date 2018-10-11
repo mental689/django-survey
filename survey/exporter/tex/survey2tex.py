@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
 import logging
 import os
 from pydoc import locate
 
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from future import standard_library
 
 from survey.exporter.survey2x import Survey2X
 from survey.exporter.tex.latex_file import LatexFile
@@ -19,9 +14,6 @@ from survey.exporter.tex.question2tex_chart import Question2TexChart
 from survey.exporter.tex.question2tex_raw import Question2TexRaw
 from survey.exporter.tex.question2tex_sankey import Question2TexSankey
 from survey.models.question import Question
-
-standard_library.install_aliases()
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -53,7 +45,7 @@ class Survey2Tex(Survey2X):
             multiple_charts = {"": options.get("chart")}
         question_synthesis = ""
         i = 0
-        for chart_title, opts in multiple_charts.items():
+        for chart_title, opts in list(multiple_charts.items()):
             i += 1
             if chart_title:
                 # "" is False, by default we do not add section or anything
@@ -90,7 +82,7 @@ class Survey2Tex(Survey2X):
                 q2tex = q2tex_class(question, latex_label=i, **opts)
                 question_synthesis += q2tex.tex()
         section_title = Question2Tex.html2latex(question.text)
-        return u"""
+        return """
 \\clearpage{}
 \\section{%s}
 

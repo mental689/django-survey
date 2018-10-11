@@ -1,19 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
 import os
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from future import standard_library
 
 from survey.models import Answer, Question, Response, Survey
 from survey.tests import BaseTest
-
-standard_library.install_aliases()
 
 
 class TestManagement(BaseTest):
@@ -33,7 +26,7 @@ class TestManagement(BaseTest):
         Answer.objects.create(response=response, question=self.qst3, body=a3)
 
     def create_survey(self):
-        self.test_managament_survey_name = u"Test Management Survëy"
+        self.test_managament_survey_name = "Test Management Survëy"
         self.survey = Survey.objects.create(
             name=self.test_managament_survey_name, is_published=True,
             need_logged_user=True, display_by_question=True,
@@ -49,13 +42,13 @@ class TestManagement(BaseTest):
         self.response = Response.objects.create(survey=self.survey,
                                                 user=User.objects.all()[0])
         self.ans1 = Answer.objects.create(
-            response=self.response, question=self.qst1, body=u"1é"
+            response=self.response, question=self.qst1, body="1é"
         )
         self.ans2 = Answer.objects.create(
-            response=self.response, question=self.qst2, body=u"2é"
+            response=self.response, question=self.qst2, body="2é"
         )
         self.ans3 = Answer.objects.create(
-            response=self.response, question=self.qst3, body=u"3é"
+            response=self.response, question=self.qst3, body="3é"
         )
         self.response_null = Response.objects.create(
             survey=self.survey, user=User.objects.all()[1]
@@ -111,7 +104,7 @@ class TestManagement(BaseTest):
     def setUp(self):
         BaseTest.setUp(self)
         self.create_survey()
-        self.expected_content = u"""\
+        self.expected_content = """\
 user,Aèbc?,Bècd?,Cède?,Dèef?
 ps250112,1é,2é,3é,
 pierre,,,,

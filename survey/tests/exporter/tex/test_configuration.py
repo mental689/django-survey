@@ -1,20 +1,10 @@
 # -*- coding: utf-8 -*-
 
-
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
-
 import os
-from builtins import str
-
-from future import standard_library
 
 from survey.exporter.tex.configuration import Configuration
 from survey.models.survey import Survey
 from survey.tests.management.test_management import TestManagement
-
-standard_library.install_aliases()
 
 
 class TestConfiguration(TestManagement):
@@ -89,7 +79,7 @@ class TestConfiguration(TestManagement):
         self.assertEqual(self.ts_conf["chart"]["type"], "pie")
         self.assertEqual(self.ts_conf["chart"]["radius"], 3)
         self.assertEqual(self.ts_conf["chart"]["text"], "legend")
-        for key, value in self.qts_expected_conf.items():
+        for key, value in list(self.qts_expected_conf.items()):
             self.assertEqual(self.qts_conf["chart"][key], value)
 
     def test_get_question_multiple_charts(self):
@@ -100,11 +90,11 @@ class TestConfiguration(TestManagement):
         qts_charts = ['Sub Sub Section with radius=3',
                       'Sub Sub Section with text=pin']
         qts_charts.sort()
-        qts_mc_results = list(self.qts_conf["multiple_charts"].keys())
+        qts_mc_results = list(self.qts_conf.get("multiple_charts").keys())
         qts_mc_results.sort()
         self.assertEqual(qts_mc_results, qts_charts)
         for chart in qts_charts:
-            for key, expected_value in self.qts_expected_conf.items():
+            for key, expected_value in list(self.qts_expected_conf.items()):
                 value = self.qts_conf["multiple_charts"][chart][key]
                 if chart == "Sub Sub Section with radius=3" and key == "radius":
                     expected_value = 3

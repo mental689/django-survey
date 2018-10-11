@@ -1,7 +1,7 @@
 -r requirements.txt
 
 # I18n
-django-rosetta==0.7.13
+django-rosetta==0.9.0
 # Lint
 pylint==1.7.2
 coverage==4.4.1

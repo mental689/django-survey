@@ -52,14 +52,6 @@
  }
 },
 {
- "model": "sites.site",
- "pk": 1,
- "fields": {
-  "domain": "example.com",
-  "name": "example.com"
- }
-},
-{
  "model": "survey.survey",
  "pk": 1,
  "fields": {
