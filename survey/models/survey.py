@@ -15,7 +15,7 @@ class Survey(models.Model):
     display_by_question = models.BooleanField(_("Display by question"),)
     template = models.CharField(_("Template"), max_length=255, null=True, blank=True)
     randomize_questions = models.BooleanField(_("Whether to randomize question to prevent bias"), default=True)
-    video_cat = models.ForeignKey(VideoCategory, default=1)
+    video_cat = models.ForeignKey(VideoCategory, default=1, on_delete=models.CASCADE)
 #    video = models.ForeignKey(Video, verbose_name=_("Video"),
 #                              related_name="videos", default=0)
 
