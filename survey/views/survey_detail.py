@@ -5,17 +5,18 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import View
 
 from survey.forms import ResponseForm
-from survey.models import Category, Survey, Video
+from survey.models import Category, Survey, Video, Response
 
 
 class SurveyDetail(View):
 
     def get(self, request, *args, **kwargs):
         survey = get_object_or_404(Survey, is_published=True, id=kwargs['id'])
-        if request.POST.get("videoID") is not None:
+        if request.GET.get("videoID") is not None:
             video = get_object_or_404(Video, id=request.GET.get("videoID"))
         else:
             video = Video.objects.random(survey.video_cat.id)
+        responses = Response.objects.filter(video=video)
         if survey.template is not None and len(survey.template) > 4:
             template_name = survey.template
         else:
@@ -33,6 +34,7 @@ class SurveyDetail(View):
             'survey': survey,
             'categories': categories,
             'video': video,
+            'num_responses': len(responses), # to display the number of votes for this video
         }
 
         return render(request, template_name, context)
