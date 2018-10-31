@@ -12,7 +12,10 @@ class SurveyDetail(View):
 
     def get(self, request, *args, **kwargs):
         survey = get_object_or_404(Survey, is_published=True, id=kwargs['id'])
-        video = Video.objects.random(survey.video_cat.id)
+        if request.POST.get("videoID") is not None:
+            video = get_object_or_404(Video, id=request.GET.get("videoID"))
+        else:
+            video = Video.objects.random(survey.video_cat.id)
         if survey.template is not None and len(survey.template) > 4:
             template_name = survey.template
         else:
