@@ -10,7 +10,7 @@
 
 {% block body %}
 	<h1> {{survey.name}} </h1>
-	<div class="survey-description"> <b>Number of votes for this video: {{ num_responses }}</b></br>
+	<div class="survey-description"> <b>Number of votes for this video: {{ num_responses }}</b><br/>
 		{{survey.description|safe}} </div>
 	<div><form action="{% url 'survey-detail' id=survey.id %}" method="post">
 	    {% csrf_token %}
