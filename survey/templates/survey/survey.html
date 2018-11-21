@@ -10,14 +10,13 @@
 
 {% block body %}
 	<h1> {{survey.name}} </h1>
-	<div class="survey-description">
+	<div class="survey-description"> <b>Number of votes for this video: {{ num_responses }}</b><br/>
 		{{survey.description|safe}} </div>
 	<div><form action="{% url 'survey-detail' id=survey.id %}" method="post">
 	    {% csrf_token %}
-	    <div><h3>Video content</h3><br>
-			<b>Number of votes for this video: {{num_responses}}</b>
+	    <div><h3>Video content</h3>
 	    {% if video.type == 0 %}
-	    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.vid }}/?mute=1&start={{ video.start }}&end={{ video.end }}&showinfo=0&controls=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+	    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.vid }}/?mute=1&start={{ video.start }}&end={{ video.end }}&showinfo=0&controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 	    {% elif video.type == 1 %}
 	    <iframe src="https://drive.google.com/file/d/{{ video.vid }}/preview" width="640" height="480"></iframe>
 	    {% else %}
