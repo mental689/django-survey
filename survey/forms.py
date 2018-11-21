@@ -60,10 +60,10 @@ class ResponseForm(models.ModelForm):
         if not self.user.is_authenticated:
             return None
         try:
-            return Response.objects.get(user=self.user, survey=self.survey)
+            return Response.objects.get(user=self.user, survey=self.survey, video=self.video)
         except Response.DoesNotExist:
-            LOGGER.debug("No saved response for '%s' for user %s",
-                         self.survey, self.user)
+            LOGGER.debug("No saved response for '%s' for user %s, video %d",
+                         self.survey, self.user, self.video.id)
             return None
 
     def _get_preexisting_answer(self, question):
