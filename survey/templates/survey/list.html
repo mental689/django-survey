@@ -7,7 +7,7 @@
 
 	<ul>
 		{% for survey in surveys %}
-		<li><a href="{{ survey.get_absolute_url }}">{% trans "Take the Survey"%} {{survey.name}}</a></li>
+		<li><a href="{{ survey.get_absolute_url }}">{% trans "Take the Survey"%} {{survey.name}} - {{survey.num_questions}}</a></li>
 		{% endfor %}
 	</div>
 </div>
