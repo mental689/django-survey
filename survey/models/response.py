@@ -31,7 +31,7 @@ class Response(models.Model):
                                related_name="responses")
     user = models.ForeignKey(user_model, on_delete=models.SET_NULL,
                              verbose_name=_("User"), null=True,
-                             blank=True)
+                             blank=True, related_name='responses')
     video = models.ForeignKey(Video, verbose_name=_("Video"),
                               related_name="responses", on_delete=models.CASCADE)
     interview_uuid = models.CharField(_("Interview unique identifier"),
