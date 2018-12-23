@@ -26,6 +26,7 @@ class Video(models.Model):
     objects = VideosManager()
     url =  models.TextField(_("Link to the video"), blank=False, null=False)
     vid =  models.CharField(_("Video ID"), blank=True, null=False, max_length=50, unique=True)
+    channelId = models.CharField(_("Channel ID"), blank=True, null=True, max_length=255)
     type = models.IntegerField(default=0) # 0: youtube, 1: others
     cat = models.ForeignKey(VideoCategory, default=1, on_delete=models.CASCADE)
     start = models.IntegerField(_("Start time"))
